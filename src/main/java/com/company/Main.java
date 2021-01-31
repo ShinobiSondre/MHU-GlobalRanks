@@ -16,8 +16,6 @@ import java.util.logging.Logger;
 public final class Main extends JavaPlugin {
     Logger logger;
     Util util;
-    public static Levels gl;
-    public static LuckPermsApi api;
 
     @Override
     public void onEnable() {
