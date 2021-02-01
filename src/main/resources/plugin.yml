@@ -9,4 +9,8 @@ commands:
     description: Checks your globalrank
     aliases: []
     usage: /globalrank
+  hgtest:
+    description: Checks your globalrank
+    aliases: []
+    usage: /globalrank
 

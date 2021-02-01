@@ -3,11 +3,13 @@ package com.company.commands;
 import com.company.Main;
 import com.company.Main;
 import com.company.util.Util;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
     Main mhu;
     public Util util1;
+    Hologram test;
 
     public RankCMD(Util utils, Main autoevent) {
         this.util1 = utils;
@@ -80,9 +83,36 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
 
         }
+        
+        if(cmd.getName().equals("hgtest")){
+
+
+            Slime slime = sender.getLocation().getWorld().spawn(sender.getLocation(), Slime.class);
+            slime.setSize(-1);
+
+            ArmorStand stand = sender.getLocation().getWorld().spawn(sender.getLocation(), ArmorStand.class);
+            stand.setCustomName("EEEEEHHHHHHHHHH?" + "\n" + "§c§lColor Test");
+            stand.setArms(false);
+            stand.setBasePlate(false);
+            stand.setSmall(true);
+            stand.setCustomNameVisible(true);
+
+
+            slime.addPassenger(stand);
+            slime.setInvulnerable(true);
+            slime.setCollidable(false);
+            sender.addPassenger(slime);
+
+
+
+
+
+        }
 
 
         return true;}
+
+
 
 
 

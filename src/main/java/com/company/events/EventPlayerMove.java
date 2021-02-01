@@ -1,6 +1,7 @@
 package com.company.events;
 
 import com.company.util.Util;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

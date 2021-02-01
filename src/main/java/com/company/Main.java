@@ -10,6 +10,7 @@ import me.lucko.luckperms.api.LuckPermsApi;
 import mhu.groot.grootlevels.classes.Levels;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 public final class Main extends JavaPlugin {
     Logger logger;
     Util util;
+    public Plugin plugin = this;
 
     @Override
     public void onEnable() {
@@ -50,6 +52,7 @@ public final class Main extends JavaPlugin {
     public void commandLoader(Util util) {
 
         this.getCommand("globalrank").setExecutor(new RankCMD(util,this));
+        this.getCommand("hgtest").setExecutor(new RankCMD(util,this));
 
     }
 
