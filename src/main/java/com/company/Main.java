@@ -1,6 +1,9 @@
 package com.company;
 
 import com.company.commands.RankCMD;
+import com.company.events.EventMythicMobDeath;
+import com.company.events.EventPlayerDeath;
+import com.company.events.EventPlayerMove;
 import com.company.events.RankEvents;
 import com.company.util.Util;
 import me.lucko.luckperms.api.LuckPermsApi;
@@ -38,6 +41,10 @@ public final class Main extends JavaPlugin {
     public void eventLoader(Util util) {
 
         getServer().getPluginManager().registerEvents(new RankEvents(), this);
+        getServer().getPluginManager().registerEvents(new EventPlayerMove(), this);
+        getServer().getPluginManager().registerEvents(new EventPlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new EventMythicMobDeath(), this);
+
     }
 
     public void commandLoader(Util util) {

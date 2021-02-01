@@ -1,5 +1,6 @@
 package com.company.events;
 
+import com.company.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,7 +9,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.io.IOException;
 
-public class EventPlayerDeath implements Listener {
+public class EventPlayerDeath extends Util implements Listener {
     @EventHandler
     public void PlayerDeath (PlayerDeathEvent p){
 

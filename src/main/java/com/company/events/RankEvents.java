@@ -6,6 +6,7 @@ import mhu.groot.grootlevels.events.PlayerLevelUpEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +43,9 @@ public class RankEvents extends Util implements Listener {
         Player pp = p.getPlayer();
 
         hologramPlayers.remove(pp.getName()+"[Global-Rank]").delete();
+
+        pp.addPassenger((Entity) hologramPlayers.get(pp.getName()+"[Global-Rank]"));
+        hologramPlayers.get(pp.getName()+"[Global-Rank]");
 
         try{
 
