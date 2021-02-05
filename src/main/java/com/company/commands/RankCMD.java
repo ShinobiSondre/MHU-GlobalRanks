@@ -83,7 +83,7 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
 
         }
-        
+
         if(cmd.getName().equals("hgtest")){
 
 
@@ -102,7 +102,6 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
             slime.setInvulnerable(true);
             slime.setCollidable(false);
             sender.addPassenger(slime);
-
 
 
 

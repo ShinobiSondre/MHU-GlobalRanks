@@ -88,11 +88,9 @@ public class Util {
 
 
 
-        if(hologramPlayers.get(killer+"[Global-Rank]")!=null)
-            hologramPlayers.get(killer+"[Global-Rank]").delete();
-        grgram = HologramsAPI.createHologram(plugin, where);
-
-
+        /*if(hologramPlayers.get(killer+"[Global-Rank]")!=null)
+            hologramPlayers.get(killer+"[Global-Rank]").delete();*/
+//
         //Calculate Score
 
         Set<String> keys = HighestScoreList().keySet();
@@ -119,7 +117,6 @@ public class Util {
                 counter_provillain++;
 
 
-
             if(key.toString().split(" default")[0].contains(player.getUniqueId().toString()))
                 position_citizen = counter_citizen;
             if(key.toString().split(" student")[0].contains(player.getUniqueId().toString()))
@@ -138,14 +135,10 @@ public class Util {
             if(key.toString().split(" villain")[0].contains(player.getUniqueId().toString()))
                 position_villain = counter_villain;
             if(key.toString().split(" pro-villain")[0].contains(player.getUniqueId().toString()))
-                position_provillain = counter_provillain;
+                position_provillain = counter_provillain;}
 
 
-
-        }
-
-
-        if(highestgroup(player).equals("default")){
+       /* if(highestgroup(player).equals("default")){
             grgram.appendTextLine(   "§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]");}
         else if(highestgroup(player).equals("student"))
             grgram.appendTextLine(   "§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]");
@@ -163,10 +156,10 @@ public class Util {
             grgram.appendTextLine(   "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]");
         else if(highestgroup(player).equals("pro-villain"))
             grgram.appendTextLine(   "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]");
-        hologramPlayers.put(killer+"[Global-Rank]", grgram);
+        hologramPlayers.put(killer+"[Global-Rank]", grgram);*/
 
 
-        hologramPlayers.get(killer+"[Global-Rank]").getVisibilityManager().hideTo(Bukkit.getPlayer(killer));
+        //hologramPlayers.get(killer+"[Global-Rank]").getVisibilityManager().hideTo(Bukkit.getPlayer(killer));
     }
 
     public String highestgroup(Player player){

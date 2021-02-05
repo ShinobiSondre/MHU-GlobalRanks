@@ -15,6 +15,7 @@ import java.io.IOException;
 import static mhu.groot.grootlevels.classes.Levels.GetPlayerLevel;
 
 public class EventPlayerMove extends Util implements Listener {
+/*
     @EventHandler
     public void moveEvent (PlayerMoveEvent m) throws NullPointerException, IOException {
         //Move event:
@@ -95,5 +96,5 @@ public class EventPlayerMove extends Util implements Listener {
 
         }
 
-    }
+    }*/
 }

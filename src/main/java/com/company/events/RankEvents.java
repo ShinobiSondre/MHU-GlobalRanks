@@ -1,6 +1,7 @@
 package com.company.events;
 
 import com.company.util.Util;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import mhu.groot.grootlevels.events.PlayerLevelUpEvent;
 import org.bukkit.Bukkit;
@@ -19,6 +20,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.UUID;
 
 import static mhu.groot.grootlevels.classes.Levels.GetPlayerLevel;
 
@@ -42,76 +45,11 @@ public class RankEvents extends Util implements Listener {
 
         Player pp = p.getPlayer();
 
-        hologramPlayers.remove(pp.getName()+"[Global-Rank]").delete();
-
-        pp.addPassenger((Entity) hologramPlayers.get(pp.getName()+"[Global-Rank]"));
-        hologramPlayers.get(pp.getName()+"[Global-Rank]");
-
-        try{
-
-
-        }catch (Exception e){
-
-
-        }
+        mobKills.remove(pp.getUniqueId());
+        hologramPlayers.clear();
     }
 
 
-    @EventHandler public void TeleportEvent(PlayerTeleportEvent ev){
-
-        Player hs = ev.getPlayer();
-
-        if(!hs.hasMetadata("NPC")){
-
-            teleported = true;
-
-            try {CalculatePosition(hs.getPlayer());} catch (IOException e) {
-                e.printStackTrace();
-            }
-        }}
-
-
-
-
-    @EventHandler public void mobDeath(MythicMobDeathEvent dd) throws IOException {
-
-        if (dd.getMob().getFaction().equals("Villain") || dd.getMob().getFaction().equals("Hero")) {
-
-
-            String killer = dd.getKiller().getName();
-
-
-            if (!mobKills.containsKey(dd.getKiller().getUniqueId())) {
-
-                mobKills.put(dd.getKiller().getUniqueId(), 1);
-
-
-            } else if (mobKills.containsKey(dd.getKiller().getUniqueId())) {
-
-                kills = mobKills.get(dd.getKiller().getUniqueId());
-                kills++;
-
-                mobKills.put((dd.getKiller().getUniqueId()), kills);
-            }
-
-        }
-
-    }
-
-        @EventHandler
-        public void PlayerDeath (PlayerDeathEvent p){
-
-            if (p.getEntity().isOnline()) {
-
-                hologramPlayers.remove(p.getEntity().getName() + "[Global-Rank]").delete();
-
-                for (Player player : Bukkit.getOnlinePlayers()) {
-
-                    try {
-                        ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                     try {
                         CalculatePosition(player.getPlayer());
