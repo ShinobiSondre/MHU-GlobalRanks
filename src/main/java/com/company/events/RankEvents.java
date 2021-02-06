@@ -1,29 +1,15 @@
 package com.company.events;
 
 import com.company.util.Util;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import mhu.groot.grootlevels.events.PlayerLevelUpEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.UUID;
-
-import static mhu.groot.grootlevels.classes.Levels.GetPlayerLevel;
 
 
 public class RankEvents extends Util implements Listener {
@@ -49,20 +35,6 @@ public class RankEvents extends Util implements Listener {
 
         //REMOVE HOLOGRAM HERE
 
-    }
-
-
-
-                    try {
-                        CalculatePosition(player.getPlayer());
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
     }
 
 

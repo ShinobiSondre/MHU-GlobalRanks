@@ -1,5 +1,6 @@
 package com.company.Hologram;
 
+import com.company.Hologram.lines.DefaultLine;
 import com.company.Hologram.lines.LineRank;
 import net.blitzcube.mlapi.api.tag.ITagController;
 import org.bukkit.entity.Entity;
@@ -16,6 +17,7 @@ public class HologramController implements ITagController {
 
     public HologramController(JavaPlugin plugin) {
         this.p = plugin;
+        this.line = new DefaultLine();
     }
 
     public void setLine(String passin) {

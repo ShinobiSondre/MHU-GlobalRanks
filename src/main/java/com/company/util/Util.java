@@ -8,7 +8,6 @@ import com.company.Main;
 import com.company.Mobs;
 import com.company.Position;
 import com.company.TotalScore;
-import io.lumine.xikage.mythicmobs.utils.holograms.Hologram;
 import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.Node;
@@ -252,7 +251,14 @@ public class Util {
                             for (Player hs : Bukkit.getOnlinePlayers()) {
 
                                 try {
-                                    ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
+                                    if(ts != null) {
+                                        ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
+                                    } else {
+                                        Bukkit.broadcastMessage("NULL M8");
+                                        ts = new TotalScore();
+                                        ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
+
+                                    }
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -265,7 +271,7 @@ public class Util {
                                 }
 
 
-                                DelayedHologram(hs, 60, hs.getUniqueId() + "ChangeRank");
+                              //  DelayedHologram(hs, 60, hs.getUniqueId() + "ChangeRank");
 
 
                             }

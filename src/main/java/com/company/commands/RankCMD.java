@@ -3,8 +3,6 @@ package com.company.commands;
 import com.company.Main;
 import com.company.Main;
 import com.company.util.Util;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +17,6 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
     Main mhu;
     public Util util1;
-    Hologram test;
 
     public RankCMD(Util utils, Main autoevent) {
         this.util1 = utils;
