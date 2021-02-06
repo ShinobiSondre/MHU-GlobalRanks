@@ -27,21 +27,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class Util {
+public class Utilities {
 
-    public Main plugin;
+    Main plugin;
     public Main getPluginInstance() { return  plugin; }
 
-    public Util(Main plugin) {
+    public Utilities(Main plugin) {
         this.plugin = plugin;
     }
 
     public static HashMap<String,String> SurpassedEvent = new HashMap();
 
     //CLASSES
-    public  TotalScore ts = new TotalScore(this);
-    public  Position p = new Position(this);
-    public  Mobs m = new Mobs();
+    public TotalScore ts = new TotalScore(this);
+    public Position p = new Position(this);
+    public Mobs m = new Mobs();
 
     public Position getReference() {return p;}
 

@@ -1,6 +1,6 @@
 package com.company.events;
 
-import com.company.util.Util;
+import com.company.util.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public class EventPlayerDeath  implements Listener {
 
-    private Util util;
+    private Utilities utilities;
 
-    public EventPlayerDeath(Util util) {
-        this.util = util;
+    public EventPlayerDeath(Utilities utilities) {
+        this.utilities = utilities;
     }
 
     @EventHandler
@@ -27,13 +27,13 @@ public class EventPlayerDeath  implements Listener {
             for (Player player : Bukkit.getOnlinePlayers()) {
 
                 try {
-                    util.ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
+                    utilities.ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
                 try {
-                    util.CalculatePosition(player.getPlayer());
+                    utilities.CalculatePosition(player.getPlayer());
 
                 } catch (IOException e) {
                     e.printStackTrace();

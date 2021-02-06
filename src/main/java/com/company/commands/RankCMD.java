@@ -1,8 +1,7 @@
 package com.company.commands;
 
 import com.company.Main;
-import com.company.Main;
-import com.company.util.Util;
+import com.company.util.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,10 +15,10 @@ import java.io.IOException;
 public class RankCMD implements CommandExecutor, Listener {
 
     Main mhu;
-    private Util util;
+    private Utilities utilities;
 
-    public RankCMD(Util utils, Main autoevent) {
-        this.util = utils;
+    public RankCMD(Utilities utils, Main autoevent) {
+        this.utilities = utils;
         this.mhu = autoevent;}
 
 
@@ -32,13 +31,13 @@ public class RankCMD implements CommandExecutor, Listener {
 
 
             try {
-                util.ts.writeTotalPoints(sender.getPlayer().getUniqueId(), sender.getPlayer());
+                utilities.ts.writeTotalPoints(sender.getPlayer().getUniqueId(), sender.getPlayer());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
-                util.CalculatePosition(sender.getPlayer());
+                utilities.CalculatePosition(sender.getPlayer());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -47,7 +46,7 @@ public class RankCMD implements CommandExecutor, Listener {
 
             try {
                 sender.getPlayer().sendMessage("Global Rank: ");
-                sender.getPlayer().sendMessage(util.GlobalRank(sender));
+                sender.getPlayer().sendMessage(utilities.GlobalRank(sender));
 
             } catch (IOException e) {
                 sender.getPlayer().sendMessage("Something went wrong");
@@ -56,7 +55,7 @@ public class RankCMD implements CommandExecutor, Listener {
 
             try {
 
-                for (String names : util.Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
+                for (String names : utilities.Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
                     sender.sendMessage("Before: " + names + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -66,13 +65,13 @@ public class RankCMD implements CommandExecutor, Listener {
             try {
 
                 try {
-                    util.ThreeClostsToScore(sender.getPlayer());
+                    utilities.ThreeClostsToScore(sender.getPlayer());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
-                for (String names : util.Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
+                for (String names : utilities.Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
                     sender.sendMessage("After: " + names + "\n");
             } catch (IOException e) {
                 e.printStackTrace();

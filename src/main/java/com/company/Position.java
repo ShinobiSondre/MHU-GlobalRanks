@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.util.Util;
+import com.company.util.Utilities;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class Position {
 
-    private Util util;
-    public Position(Util util) {
-        this.util = util;
+    private Utilities utilities;
+    public Position(Utilities utilities) {
+        this.utilities = utilities;
     }
 
     public int ReturnPosition(Player player) throws IOException {
@@ -43,7 +43,7 @@ public class Position {
         //Calculate Score
 
 
-        Set<String> keys = util.HighestScoreList().keySet();
+        Set<String> keys = utilities.HighestScoreList().keySet();
 
         for(String key : keys){
 
@@ -93,25 +93,25 @@ public class Position {
         }
 
 
-        if(util.highestgroup(player).equals("default"))
+        if(utilities.highestgroup(player).equals("default"))
             return position_citizen;
 
-        else if(util.highestgroup(player).equals("student"))
+        else if(utilities.highestgroup(player).equals("student"))
             return position_student;
-        else if(util.highestgroup(player).equals("sidekick"))
+        else if(utilities.highestgroup(player).equals("sidekick"))
             return position_sidekick;
-        else if(util.highestgroup(player).equals("hero"))
+        else if(utilities.highestgroup(player).equals("hero"))
             return position_hero;
-        else if(util.highestgroup(player).equals("pro-hero"))
+        else if(utilities.highestgroup(player).equals("pro-hero"))
             return position_prohero;
 
-        else if(util.highestgroup(player).equals("thug"))
+        else if(utilities.highestgroup(player).equals("thug"))
             return position_thug;
-        else if(util.highestgroup(player).equals("delinquent"))
+        else if(utilities.highestgroup(player).equals("delinquent"))
             return position_delinquent;
-        else if(util.highestgroup(player).equals("villain"))
+        else if(utilities.highestgroup(player).equals("villain"))
             return position_villain;
-        else if(util.highestgroup(player).equals("pro-villain"))
+        else if(utilities.highestgroup(player).equals("pro-villain"))
             return position_provillain;
 
 

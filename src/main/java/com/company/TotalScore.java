@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.util.Util;
+import com.company.util.Utilities;
 import me.realized.duels.api.DuelsAPI;
 import org.bukkit.entity.Player;
 
@@ -12,15 +12,15 @@ import static mhu.groot.grootlevels.classes.Levels.GetPlayerLevel;
 
 public class TotalScore {
 
-    private Util util;
-    public TotalScore(Util util) { this.util = util;}
+    private Utilities utilities;
+    public TotalScore(Utilities utilities) { this.utilities = utilities;}
 
     public int getTotalScore(Player player) throws IOException {
 
         int level = GetPlayerLevel(player);
 
         int mobkills;
-        try{mobkills = util.mobKills.get(player.getUniqueId());} catch (Exception e) {
+        try{mobkills = utilities.mobKills.get(player.getUniqueId());} catch (Exception e) {
             mobkills = 1;}
 
         int duelwins;
@@ -39,12 +39,12 @@ public class TotalScore {
         int level = GetPlayerLevel(player);
         int mobkills;
 
-        if(!util.readmobkills){
-            util.mobKills.put((player.getUniqueId()),util.m.MobsKilled(player.getUniqueId()));
-            util.readmobkills = true;}
+        if(!utilities.readmobkills){
+            utilities.mobKills.put((player.getUniqueId()), utilities.m.MobsKilled(player.getUniqueId()));
+            utilities.readmobkills = true;}
 
         try{
-            mobkills = util.mobKills.get(player.getUniqueId());} catch (Exception e) {
+            mobkills = utilities.mobKills.get(player.getUniqueId());} catch (Exception e) {
             mobkills = 1;}
 
         int duelwins = 1;
@@ -57,14 +57,14 @@ public class TotalScore {
         String input;
 
         try {
-            input = totalscore + "\n" + "Rank: " + util.highestgroup(player) + "\n" + "Mobs Killed: " + mobkills + "\n" + "Playername: " + player.getName() + "\n";
+            input = totalscore + "\n" + "Rank: " + utilities.highestgroup(player) + "\n" + "Mobs Killed: " + mobkills + "\n" + "Playername: " + player.getName() + "\n";
         }
             catch (Exception e) {
             input = 1 + "\n" + "Rank: " + "default" + "\n" + "Mobs Killed: " + 1 + "\n" + "Playername: " + "Steve" + "\n";
         }
 
 
-        util.Writer(input,uuid.toString(),"PlayerData");
+        utilities.Writer(input,uuid.toString(),"PlayerData");
 
     }
 
