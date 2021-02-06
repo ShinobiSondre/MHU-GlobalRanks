@@ -29,12 +29,21 @@ import java.util.stream.Stream;
 
 public class Util {
 
+    public Main plugin;
+    public Main getPluginInstance() { return  plugin; }
+
+    public Util(Main plugin) {
+        this.plugin = plugin;
+    }
+
     public static HashMap<String,String> SurpassedEvent = new HashMap();
 
     //CLASSES
-    public static TotalScore ts = new TotalScore();
-    public static Position p = new Position();
-    public static Mobs m = new Mobs();
+    public  TotalScore ts = new TotalScore(this);
+    public  Position p = new Position(this);
+    public  Mobs m = new Mobs();
+
+    public Position getReference() {return p;}
 
     //CHECKS
     public static boolean readmobkills;
@@ -46,11 +55,11 @@ public class Util {
     public static HashMap<String,Integer>textwait = new HashMap<>();
 
     //MOB KILLS
-    protected static int kills = 0;
+    public int kills = 0;
     public static HashMap<UUID, Integer> mobKills = new HashMap<>();
 
     //This plugin instance
-    private static final Main plugin;
+
 
     //API
     LuckPermsApi api = (LuckPermsApi) Bukkit.getServicesManager().getRegistration(LuckPermsApi.class).getProvider();
@@ -62,11 +71,9 @@ public class Util {
     public void RegisterMAPI() {
         line = (MultiLineAPI) Bukkit.getPluginManager().getPlugin("MultiLineAPI");
         if(line == null)  throw new IllegalStateException("Failed to start missing MultiLineAPI");
-        defaultLine = new DefaultLine();
+        controller = new HologramController(plugin);
         line.addDefaultTagController(controller);
     }
-
-    static {plugin = (Main) Bukkit.getServer().getPluginManager().getPlugin("MHU_GlobalRanks");}
 
     public void CalculatePosition(Player player) throws IOException {
 
@@ -239,7 +246,10 @@ public class Util {
 
 
     public void RankUpdater(long ticks,String indentifier){
-
+        if(plugin == null) {
+            Bukkit.broadcastMessage("plugin reference null broski");
+            return;
+        }
         final int tid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             public void run() {
 
@@ -251,14 +261,7 @@ public class Util {
                             for (Player hs : Bukkit.getOnlinePlayers()) {
 
                                 try {
-                                    if(ts != null) {
-                                        ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
-                                    } else {
-                                        Bukkit.broadcastMessage("NULL M8");
-                                        ts = new TotalScore();
-                                        ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
-
-                                    }
+                                    ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

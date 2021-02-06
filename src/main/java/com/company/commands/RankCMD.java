@@ -13,13 +13,13 @@ import org.bukkit.event.Listener;
 import java.io.IOException;
 
 
-public class RankCMD extends Util implements CommandExecutor, Listener {
+public class RankCMD implements CommandExecutor, Listener {
 
     Main mhu;
-    public Util util1;
+    private Util util;
 
     public RankCMD(Util utils, Main autoevent) {
-        this.util1 = utils;
+        this.util = utils;
         this.mhu = autoevent;}
 
 
@@ -32,13 +32,13 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
 
             try {
-                ts.writeTotalPoints(sender.getPlayer().getUniqueId(), sender.getPlayer());
+                util.ts.writeTotalPoints(sender.getPlayer().getUniqueId(), sender.getPlayer());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
-                CalculatePosition(sender.getPlayer());
+                util.CalculatePosition(sender.getPlayer());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -47,7 +47,7 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
             try {
                 sender.getPlayer().sendMessage("Global Rank: ");
-                sender.getPlayer().sendMessage(GlobalRank(sender));
+                sender.getPlayer().sendMessage(util.GlobalRank(sender));
 
             } catch (IOException e) {
                 sender.getPlayer().sendMessage("Something went wrong");
@@ -56,7 +56,7 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
 
             try {
 
-                for (String names : Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
+                for (String names : util.Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
                     sender.sendMessage("Before: " + names + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -66,13 +66,13 @@ public class RankCMD extends Util implements CommandExecutor, Listener {
             try {
 
                 try {
-                    ThreeClostsToScore(sender.getPlayer());
+                    util.ThreeClostsToScore(sender.getPlayer());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
-                for (String names : Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
+                for (String names : util.Reader("BelowPlayers", sender.getUniqueId().toString(), "Below: "))
                     sender.sendMessage("After: " + names + "\n");
             } catch (IOException e) {
                 e.printStackTrace();

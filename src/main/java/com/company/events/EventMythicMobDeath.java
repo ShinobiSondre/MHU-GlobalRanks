@@ -8,7 +8,12 @@ import org.bukkit.event.EventHandler;
 
 import java.io.IOException;
 
-public class EventMythicMobDeath extends Util implements Listener {
+public class EventMythicMobDeath implements Listener {
+
+    private Util util;
+    public EventMythicMobDeath(Util util) {
+        this.util = util;
+    }
 
         @EventHandler
         public void mobDeath(MythicMobDeathEvent dd) throws IOException {
@@ -16,16 +21,16 @@ public class EventMythicMobDeath extends Util implements Listener {
             if (dd.getMob().getFaction().equals("Villain") || dd.getMob().getFaction().equals("Hero")) {
                 String killer = dd.getKiller().getName();
 
-                if (!mobKills.containsKey(dd.getKiller().getUniqueId())) {
+                if (!util.mobKills.containsKey(dd.getKiller().getUniqueId())) {
 
-                    mobKills.put(dd.getKiller().getUniqueId(), 1);
+                    util. mobKills.put(dd.getKiller().getUniqueId(), 1);
 
-                } else if (mobKills.containsKey(dd.getKiller().getUniqueId())) {
+                } else if (util.mobKills.containsKey(dd.getKiller().getUniqueId())) {
 
-                    kills = mobKills.get(dd.getKiller().getUniqueId());
-                    kills++;
+                    util.kills = util.mobKills.get(dd.getKiller().getUniqueId());
+                    util.kills++;
 
-                    mobKills.put((dd.getKiller().getUniqueId()), kills);
+                    util.mobKills.put((dd.getKiller().getUniqueId()), util.kills);
                 }
 
             }

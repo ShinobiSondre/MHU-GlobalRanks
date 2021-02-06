@@ -90,11 +90,6 @@
             <artifactId>jsoup</artifactId>
             <version>1.11.3</version>
         </dependency>
-        <dependency>
-            <groupId>io.lumine.xikage</groupId>
-            <artifactId>MythicMobs</artifactId>
-            <version>4.9.1</version>
-            <scope>provided</scope>
-        </dependency>
+
     </dependencies>
 </project>

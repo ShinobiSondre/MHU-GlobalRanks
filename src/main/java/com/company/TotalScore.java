@@ -10,14 +10,17 @@ import java.util.UUID;
 import static java.lang.Integer.parseInt;
 import static mhu.groot.grootlevels.classes.Levels.GetPlayerLevel;
 
-public class TotalScore extends Util {
+public class TotalScore {
+
+    private Util util;
+    public TotalScore(Util util) { this.util = util;}
 
     public int getTotalScore(Player player) throws IOException {
 
         int level = GetPlayerLevel(player);
 
         int mobkills;
-        try{mobkills = mobKills.get(player.getUniqueId());} catch (Exception e) {
+        try{mobkills = util.mobKills.get(player.getUniqueId());} catch (Exception e) {
             mobkills = 1;}
 
         int duelwins;
@@ -36,12 +39,12 @@ public class TotalScore extends Util {
         int level = GetPlayerLevel(player);
         int mobkills;
 
-        if(!readmobkills){
-            mobKills.put((player.getUniqueId()),m.MobsKilled(player.getUniqueId()));
-            readmobkills = true;}
+        if(!util.readmobkills){
+            util.mobKills.put((player.getUniqueId()),util.m.MobsKilled(player.getUniqueId()));
+            util.readmobkills = true;}
 
         try{
-            mobkills = mobKills.get(player.getUniqueId());} catch (Exception e) {
+            mobkills = util.mobKills.get(player.getUniqueId());} catch (Exception e) {
             mobkills = 1;}
 
         int duelwins = 1;
@@ -54,11 +57,14 @@ public class TotalScore extends Util {
         String input;
 
         try {
-            input = totalscore + "\n" + "Rank: " + highestgroup(player) + "\n" + "Mobs Killed: " + mobkills + "\n" + "Playername: " + player.getName() + "\n";
-        } catch (Exception e) {input = 1 + "\n" + "Rank: " + "default" + "\n" + "Mobs Killed: " + 1 + "\n" + "Playername: " + "Steve" + "\n";}
+            input = totalscore + "\n" + "Rank: " + util.highestgroup(player) + "\n" + "Mobs Killed: " + mobkills + "\n" + "Playername: " + player.getName() + "\n";
+        }
+            catch (Exception e) {
+            input = 1 + "\n" + "Rank: " + "default" + "\n" + "Mobs Killed: " + 1 + "\n" + "Playername: " + "Steve" + "\n";
+        }
 
 
-        Writer(input,uuid.toString(),"PlayerData");
+        util.Writer(input,uuid.toString(),"PlayerData");
 
     }
 

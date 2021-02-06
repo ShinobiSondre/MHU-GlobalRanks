@@ -12,8 +12,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.io.IOException;
 
 
-public class RankEvents extends Util implements Listener {
+public class RankEvents implements Listener {
 
+    private Util util;
+
+    public RankEvents(Util util) {
+        this.util = util;
+    }
 
     @EventHandler
     public void PlayerLoginEvent(PlayerLoginEvent ev) throws IOException {
@@ -21,9 +26,9 @@ public class RankEvents extends Util implements Listener {
         Player player = ev.getPlayer();
 
         if(ev.getPlayer().isOnline()){
-            ts.writeTotalPoints(player.getUniqueId(),player);
-            p.CalculatePosition(player);
-            DelayedHologram(player,50,"Login"+player.getUniqueId().toString());}}
+            util.ts.writeTotalPoints(player.getUniqueId(),player);
+            util.CalculatePosition(player);
+            util.DelayedHologram(player,50,"Login"+player.getUniqueId().toString());}}
 
 
     @EventHandler
@@ -31,7 +36,7 @@ public class RankEvents extends Util implements Listener {
 
         Player pp = p.getPlayer();
 
-        mobKills.remove(pp.getUniqueId());
+        util.mobKills.remove(pp.getUniqueId());
 
         //REMOVE HOLOGRAM HERE
 
@@ -44,19 +49,19 @@ public class RankEvents extends Util implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
 
             try {
-                ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
+                util.ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
-                CalculatePosition(player.getPlayer());
+                util.CalculatePosition(player.getPlayer());
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            DelayedHologram(player, 80, player.getUniqueId() + "lvlUp");
+            util.DelayedHologram(player, 80, player.getUniqueId() + "lvlUp");
 
         }
 

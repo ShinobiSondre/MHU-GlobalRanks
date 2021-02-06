@@ -6,7 +6,12 @@ import org.bukkit.entity.Player;
 import java.io.IOException;
 import java.util.Set;
 
-public class Position extends Util {
+public class Position {
+
+    private Util util;
+    public Position(Util util) {
+        this.util = util;
+    }
 
     public int ReturnPosition(Player player) throws IOException {
 
@@ -38,7 +43,7 @@ public class Position extends Util {
         //Calculate Score
 
 
-        Set<String> keys = HighestScoreList().keySet();
+        Set<String> keys = util.HighestScoreList().keySet();
 
         for(String key : keys){
 
@@ -88,25 +93,25 @@ public class Position extends Util {
         }
 
 
-        if(highestgroup(player).equals("default"))
+        if(util.highestgroup(player).equals("default"))
             return position_citizen;
 
-        else if(highestgroup(player).equals("student"))
+        else if(util.highestgroup(player).equals("student"))
             return position_student;
-        else if(highestgroup(player).equals("sidekick"))
+        else if(util.highestgroup(player).equals("sidekick"))
             return position_sidekick;
-        else if(highestgroup(player).equals("hero"))
+        else if(util.highestgroup(player).equals("hero"))
             return position_hero;
-        else if(highestgroup(player).equals("pro-hero"))
+        else if(util.highestgroup(player).equals("pro-hero"))
             return position_prohero;
 
-        else if(highestgroup(player).equals("thug"))
+        else if(util.highestgroup(player).equals("thug"))
             return position_thug;
-        else if(highestgroup(player).equals("delinquent"))
+        else if(util.highestgroup(player).equals("delinquent"))
             return position_delinquent;
-        else if(highestgroup(player).equals("villain"))
+        else if(util.highestgroup(player).equals("villain"))
             return position_villain;
-        else if(highestgroup(player).equals("pro-villain"))
+        else if(util.highestgroup(player).equals("pro-villain"))
             return position_provillain;
 
 

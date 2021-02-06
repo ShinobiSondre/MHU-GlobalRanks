@@ -15,24 +15,24 @@ import java.util.logging.Logger;
 
 public final class Main extends JavaPlugin {
     Logger logger;
-    Util util;
     public Plugin plugin = this;
+    Util utily;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-
         logger = Bukkit.getLogger();
         logger.info( "\n" + "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" + "--------------------------------------" + "\n" + "MHU-GlobalRank" + "\n" + "--------------------------------------"
 
                 + "\n" + "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n");
-
+        Util util = new Util(this);
+        utily = util;
         logger.info("Registering commands!");
         commandLoader(util);
         logger.info("Registering RankEvents");
         eventLoader(util);
 
-        util.RankUpdater(20,"UpdateRank");
+        //util.RankUpdater(20,"UpdateRank");
         util.RegisterMAPI();
     }
 
@@ -40,9 +40,9 @@ public final class Main extends JavaPlugin {
 
     public void eventLoader(Util util) {
 
-        getServer().getPluginManager().registerEvents(new RankEvents(), this);
-        getServer().getPluginManager().registerEvents(new EventPlayerDeath(), this);
-        getServer().getPluginManager().registerEvents(new EventMythicMobDeath(), this);
+        getServer().getPluginManager().registerEvents(new RankEvents(util), this);
+        getServer().getPluginManager().registerEvents(new EventPlayerDeath(util), this);
+        getServer().getPluginManager().registerEvents(new EventMythicMobDeath(util), this);
 
     }
 
@@ -60,7 +60,7 @@ public final class Main extends JavaPlugin {
 
         for(Player player: Bukkit.getOnlinePlayers()) {
             try {
-                util.ts.writeTotalPoints(player.getUniqueId(),player);
+                utily.ts.writeTotalPoints(player.getUniqueId(),player);
             } catch (IOException e) {
                 e.printStackTrace();
             }

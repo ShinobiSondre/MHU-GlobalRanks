@@ -9,7 +9,14 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.io.IOException;
 
-public class EventPlayerDeath extends Util implements Listener {
+public class EventPlayerDeath  implements Listener {
+
+    private Util util;
+
+    public EventPlayerDeath(Util util) {
+        this.util = util;
+    }
+
     @EventHandler
     public void PlayerDeath (PlayerDeathEvent p){
 
@@ -20,13 +27,13 @@ public class EventPlayerDeath extends Util implements Listener {
             for (Player player : Bukkit.getOnlinePlayers()) {
 
                 try {
-                    ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
+                    util.ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
                 try {
-                    CalculatePosition(player.getPlayer());
+                    util.CalculatePosition(player.getPlayer());
 
                 } catch (IOException e) {
                     e.printStackTrace();
