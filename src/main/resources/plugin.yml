@@ -2,7 +2,7 @@ name: MHU_GlobalRanks
 version: ${project.version}
 main: com.company.Main
 api-version: 2.10.0
-depend: [HolographicDisplays]
+depend: [ProtocolLib, MultiLineAPI]
 softdepend: []
 commands:
   globalrank:

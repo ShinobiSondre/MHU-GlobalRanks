@@ -33,7 +33,7 @@ public final class Main extends JavaPlugin {
         eventLoader(util);
 
         util.RankUpdater(20,"UpdateRank");
-
+        util.RegisterMAPI();
     }
 
 

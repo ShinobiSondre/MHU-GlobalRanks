@@ -5,12 +5,11 @@ import com.company.Main;
 import com.company.Mobs;
 import com.company.Position;
 import com.company.TotalScore;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.Node;
 import me.lucko.luckperms.api.User;
+import net.blitzcube.mlapi.MultiLineAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -46,17 +45,20 @@ public class Util {
     protected static int kills = 0;
     public static HashMap<UUID, Integer> mobKills = new HashMap<>();
 
-    //Holograms
-    public static Hologram grgram;
-
-            //This plugin instance
+    //This plugin instance
     private static final Main plugin;
 
     //API
     LuckPermsApi api = (LuckPermsApi) Bukkit.getServicesManager().getRegistration(LuckPermsApi.class).getProvider();
 
-    static {plugin = (Main) Bukkit.getServer().getPluginManager().getPlugin("MHU_GlobalRanks");}
+    MultiLineAPI line;
 
+    public void RegisterMAPI() {
+        line = (MultiLineAPI) Bukkit.getPluginManager().getPlugin("MultiLineAPI");
+        if(line == null)  throw new IllegalStateException("Failed to start missing MultiLineAPI");
+    }
+
+    static {plugin = (Main) Bukkit.getServer().getPluginManager().getPlugin("MHU_GlobalRanks");}
 
     public void CalculatePosition(Player player) throws IOException {
 
@@ -134,34 +136,47 @@ public class Util {
             if(key.toString().split(" villain")[0].contains(player.getUniqueId().toString()))
                 position_villain = counter_villain;
             if(key.toString().split(" pro-villain")[0].contains(player.getUniqueId().toString()))
-                position_provillain = counter_provillain;}
+                position_provillain = counter_provillain;
+        }
 
         //HOLOGRAMS HERE
         //Where it says grgram.appendTextLine just change it to ur HologramUpdate or HologramCreate Method
         //the string should be kept as is
-
-        if(highestgroup(player).equals("default")){
-            grgram.appendTextLine(   "§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]");}
-        else if(highestgroup(player).equals("student"))
-            grgram.appendTextLine(   "§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]");
-        else if(highestgroup(player).equals("sidekick"))
-            grgram.appendTextLine(   "§f§l[§1Sidekick§f§l]" + " §f§l[§1" + position_sidekick + "§f§l]");
-        else if(highestgroup(player).equals("hero"))
-            grgram.appendTextLine(   "§f§l[§eHero§f§l]" + " §f§l[§e" + position_hero + "§f§l]");
-        else if(highestgroup(player).equals("pro-hero"))
-            grgram.appendTextLine(   "§f§l[§6Pro-Hero§f§l]" + " §f§l[§6" + position_prohero + "§f§l]");
-        else if(highestgroup(player).equals("thug"))
-            grgram.appendTextLine(   "§f§l[§cThug§f§l]" + " §f§l[§c"+ position_thug + "§f§l]");
-        else if(highestgroup(player).equals("delinquent"))
-            grgram.appendTextLine(   "§f§l[§5Delinquent§f§l]" + " §f§l[§5" + position_delinquent + "§f§l]");
-        else if(highestgroup(player).equals("villain"))
-            grgram.appendTextLine(   "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]");
-        else if(highestgroup(player).equals("pro-villain"))
-            grgram.appendTextLine(   "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]");
-
+        switch(highestgroup(player)) {
+            case "default":
+                line.getTag(player).getLines()[0]"§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]";
+                break;
+            case "student":
+                "§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]"
+                break;
+            case "sidekick":
+                "§f§l[§1Sidekick§f§l]" + " §f§l[§1" + position_sidekick + "§f§l]"
+                break;
+            case"hero":
+                "§f§l[§eHero§f§l]" + " §f§l[§e" + position_hero + "§f§l]"
+                break;
+            case "pro-hero":
+                "§f§l[§6Pro-Hero§f§l]" + " §f§l[§6" + position_prohero + "§f§l]"
+                break;
+            case "thug":
+                "§f§l[§cThug§f§l]" + " §f§l[§c"+ position_thug + "§f§l]"
+                break;
+            case "delinquent":
+                "§f§l[§5Delinquent§f§l]" + " §f§l[§5" + position_delinquent + "§f§l]"
+                break;
+            case "villain":
+                "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]"
+                break;
+            case "pro-villain":
+                "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]"
+                break;
+        }
 
 
     }
+
+
+
 
     public String highestgroup(Player player){
 
