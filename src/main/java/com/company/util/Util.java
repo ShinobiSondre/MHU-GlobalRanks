@@ -47,7 +47,6 @@ public class Util {
     public static HashMap<UUID, Integer> mobKills = new HashMap<>();
 
     //Holograms
-    public static HashMap<String, Hologram> hologramPlayers = new HashMap<>();
     public static Hologram grgram;
 
             //This plugin instance
@@ -88,9 +87,9 @@ public class Util {
 
 
 
-        /*if(hologramPlayers.get(killer+"[Global-Rank]")!=null)
-            hologramPlayers.get(killer+"[Global-Rank]").delete();*/
-//
+        //HOLOGRAMS HERE
+        //REMOVE THE HOLOGRAM HERE TO BE LATER READDED/UPDATED DOWN BELOW
+
         //Calculate Score
 
         Set<String> keys = HighestScoreList().keySet();
@@ -137,8 +136,11 @@ public class Util {
             if(key.toString().split(" pro-villain")[0].contains(player.getUniqueId().toString()))
                 position_provillain = counter_provillain;}
 
+        //HOLOGRAMS HERE
+        //Where it says grgram.appendTextLine just change it to ur HologramUpdate or HologramCreate Method
+        //the string should be kept as is
 
-       /* if(highestgroup(player).equals("default")){
+        if(highestgroup(player).equals("default")){
             grgram.appendTextLine(   "§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]");}
         else if(highestgroup(player).equals("student"))
             grgram.appendTextLine(   "§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]");
@@ -156,10 +158,9 @@ public class Util {
             grgram.appendTextLine(   "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]");
         else if(highestgroup(player).equals("pro-villain"))
             grgram.appendTextLine(   "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]");
-        hologramPlayers.put(killer+"[Global-Rank]", grgram);*/
 
 
-        //hologramPlayers.get(killer+"[Global-Rank]").getVisibilityManager().hideTo(Bukkit.getPlayer(killer));
+
     }
 
     public String highestgroup(Player player){
@@ -207,19 +208,49 @@ public class Util {
         return "default";}
 
 
-   /* public void ConstantUpdates(long ticks,String indentifier){
+    public void RankUpdater(long ticks,String indentifier){
 
         final int tid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             public void run() {
 
+                for(Player player : Bukkit.getOnlinePlayers()) {
 
+                    try {
+                        if (!Rank(player.getUniqueId()).equals(highestgroup(player))) {
+
+                            for (Player hs : Bukkit.getOnlinePlayers()) {
+
+                                try {
+                                    ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try {
+                                    CalculatePosition(hs.getPlayer());
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                DelayedHologram(hs, 60, hs.getUniqueId() + "ChangeRank");
+
+
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
 
             }
         }, 0, ticks); //schedule task with the ticks specified in the arguments
 
 
     }
-*/
+
 
 
 

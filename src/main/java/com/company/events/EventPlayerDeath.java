@@ -19,7 +19,7 @@ public class EventPlayerDeath extends Util implements Listener {
 
         if (p.getEntity().isOnline()) {
 
-            hologramPlayers.remove(p.getEntity().getName() + "[Global-Rank]").delete();
+            //REMOVE HOLOGRAM HERE
 
             for (Player player : Bukkit.getOnlinePlayers()) {
 

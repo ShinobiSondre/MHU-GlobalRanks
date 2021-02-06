@@ -3,18 +3,14 @@ package com.company;
 import com.company.commands.RankCMD;
 import com.company.events.EventMythicMobDeath;
 import com.company.events.EventPlayerDeath;
-import com.company.events.EventPlayerMove;
 import com.company.events.RankEvents;
 import com.company.util.Util;
-import me.lucko.luckperms.api.LuckPermsApi;
-import mhu.groot.grootlevels.classes.Levels;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 public final class Main extends JavaPlugin {
@@ -36,6 +32,8 @@ public final class Main extends JavaPlugin {
         logger.info("Registering RankEvents");
         eventLoader(util);
 
+        util.RankUpdater(20,"UpdateRank");
+
     }
 
 
@@ -43,7 +41,6 @@ public final class Main extends JavaPlugin {
     public void eventLoader(Util util) {
 
         getServer().getPluginManager().registerEvents(new RankEvents(), this);
-        getServer().getPluginManager().registerEvents(new EventPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new EventPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new EventMythicMobDeath(), this);
 
@@ -69,11 +66,8 @@ public final class Main extends JavaPlugin {
             }
         }
 
-        for(int i = 0; i<util.hologramPlayers.size(); i++){
 
-            util.hologramPlayers.get(i).delete();
-
-        }
+        //REMOVE HOLOGRAMS HERE
 
 
     }

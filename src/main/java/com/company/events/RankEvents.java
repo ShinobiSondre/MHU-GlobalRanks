@@ -46,7 +46,9 @@ public class RankEvents extends Util implements Listener {
         Player pp = p.getPlayer();
 
         mobKills.remove(pp.getUniqueId());
-        hologramPlayers.clear();
+
+        //REMOVE HOLOGRAM HERE
+
     }
 
 
