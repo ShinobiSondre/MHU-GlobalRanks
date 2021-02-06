@@ -6,16 +6,14 @@ import com.company.events.EventPlayerDeath;
 import com.company.events.RankEvents;
 import com.company.util.Utilities;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
     Logger logger;
-    Utilities u;
+    Utilities utilities;
+
 
     public void onEnable() {
         // Plugin startup logic
@@ -23,18 +21,16 @@ public class Main extends JavaPlugin {
         logger.info( "\n" + "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" + "--------------------------------------" + "\n" + "MHU-GlobalRank" + "\n" + "--------------------------------------"
 
                 + "\n" + "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n" +"\n");
-        Utilities utilities = new Utilities(this);
+        utilities = new Utilities(this);
         logger.info("Registering commands!");
         commandLoader(utilities);
         logger.info("Registering RankEvents");
         eventLoader(utilities);
-
         //util.RankUpdater(20,"UpdateRank");
-        utilities.RegisterMAPI();
     }
 
     public Main getInstance() { return this;}
-    public Utilities getUtilitiesInstance() {return u;}
+    public Utilities getUtilitiesInstance() {return utilities;}
 
     public void eventLoader(Utilities utilities) {
 
@@ -48,7 +44,6 @@ public class Main extends JavaPlugin {
 
         this.getCommand("globalrank").setExecutor(new RankCMD(utilities,this));
         this.getCommand("hgtest").setExecutor(new RankCMD(utilities,this));
-
     }
 
 

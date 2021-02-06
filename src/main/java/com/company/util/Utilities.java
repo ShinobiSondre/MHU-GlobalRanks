@@ -1,9 +1,6 @@
 package com.company.util;
 
 
-import com.company.Hologram.HologramController;
-import com.company.Hologram.lines.DefaultLine;
-import com.company.Hologram.lines.LineRank;
 import com.company.Main;
 import com.company.Mobs;
 import com.company.Position;
@@ -12,8 +9,7 @@ import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.Node;
 import me.lucko.luckperms.api.User;
-import net.blitzcube.mlapi.MultiLineAPI;
-import net.blitzcube.mlapi.tag.Tag;
+import me.nomonewman.nameTag.NameTagAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -30,10 +26,13 @@ import java.util.stream.Stream;
 public class Utilities {
 
     Main plugin;
+    NameTagAPI NAMEAPI;
+
     public Main getPluginInstance() { return  plugin; }
 
     public Utilities(Main plugin) {
         this.plugin = plugin;
+        NAMEAPI = (NameTagAPI) plugin.getServer().getPluginManager().getPlugin("NameTagAPI");
     }
 
     public static HashMap<String,String> SurpassedEvent = new HashMap();
@@ -63,17 +62,6 @@ public class Utilities {
 
     //API
     LuckPermsApi api = (LuckPermsApi) Bukkit.getServicesManager().getRegistration(LuckPermsApi.class).getProvider();
-
-    MultiLineAPI line;
-    DefaultLine defaultLine;
-    HologramController controller;
-
-    public void RegisterMAPI() {
-        line = (MultiLineAPI) Bukkit.getPluginManager().getPlugin("MultiLineAPI");
-        if(line == null)  throw new IllegalStateException("Failed to start missing MultiLineAPI");
-        controller = new HologramController(plugin);
-        line.addDefaultTagController(controller);
-    }
 
     public void CalculatePosition(Player player) throws IOException {
 
@@ -191,13 +179,7 @@ public class Utilities {
     }
 
     public void updatePlayerTag(Player player, String value) {
-        MultiLineAPI api = line;
-        api.deleteTag(player);
-        api.removeDefaultTagController(controller);
-        controller.line = new LineRank(value);
-        api.addDefaultTagController(controller);
-        Tag tag = line.getOrCreateTag(player);
-        tag.update(controller.line);
+        NAMEAPI.updateThing(value, player);
     }
 
     public String highestgroup(Player player){

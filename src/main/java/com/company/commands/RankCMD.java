@@ -81,26 +81,23 @@ public class RankCMD implements CommandExecutor, Listener {
         }
 
         if(cmd.getName().equals("hgtest")){
-
-
-            Slime slime = sender.getLocation().getWorld().spawn(sender.getLocation(), Slime.class);
-            slime.setSize(-1);
-
-            ArmorStand stand = sender.getLocation().getWorld().spawn(sender.getLocation(), ArmorStand.class);
-            stand.setCustomName("EEEEEHHHHHHHHHH?" + "\n" + "§c§lColor Test");
-            stand.setArms(false);
-            stand.setBasePlate(false);
-            stand.setSmall(true);
-            stand.setCustomNameVisible(true);
-
-
-            slime.addPassenger(stand);
-            slime.setInvulnerable(true);
-            slime.setCollidable(false);
-            sender.addPassenger(slime);
-
-
-
+//
+//
+//            Slime slime = sender.getLocation().getWorld().spawn(sender.getLocation(), Slime.class);
+//            slime.setSize(-1);
+//
+//            ArmorStand stand = sender.getLocation().getWorld().spawn(sender.getLocation(), ArmorStand.class);
+//            stand.setCustomName("EEEEEHHHHHHHHHH?" + "\n" + "§c§lColor Test");
+//            stand.setArms(false);
+//            stand.setBasePlate(false);
+//            stand.setSmall(true);
+//            stand.setCustomNameVisible(true);
+//
+//
+//            slime.addPassenger(stand);
+//            slime.setInvulnerable(true);
+//            slime.setCollidable(false);
+//            sender.addPassenger(slime);
 
         }
 
