@@ -34,6 +34,7 @@ public class Main extends JavaPlugin {
     }
 
     public Main getInstance() { return this;}
+    public Utilities getUtilitiesInstance() {return u;}
 
     public void eventLoader(Utilities utilities) {
 
