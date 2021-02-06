@@ -12,7 +12,7 @@ import java.util.List;
 public class HologramController implements ITagController {
 
     private final JavaPlugin p;
-    private ITagController.TagLine line;
+    public ITagController.TagLine line;
 
     public HologramController(JavaPlugin plugin) {
         this.p = plugin;

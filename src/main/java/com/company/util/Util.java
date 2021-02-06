@@ -1,15 +1,20 @@
 package com.company.util;
 
 
+import com.company.Hologram.HologramController;
+import com.company.Hologram.lines.DefaultLine;
+import com.company.Hologram.lines.LineRank;
 import com.company.Main;
 import com.company.Mobs;
 import com.company.Position;
 import com.company.TotalScore;
+import io.lumine.xikage.mythicmobs.utils.holograms.Hologram;
 import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.Node;
 import me.lucko.luckperms.api.User;
 import net.blitzcube.mlapi.MultiLineAPI;
+import net.blitzcube.mlapi.tag.Tag;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -52,10 +57,14 @@ public class Util {
     LuckPermsApi api = (LuckPermsApi) Bukkit.getServicesManager().getRegistration(LuckPermsApi.class).getProvider();
 
     MultiLineAPI line;
+    DefaultLine defaultLine;
+    HologramController controller;
 
     public void RegisterMAPI() {
         line = (MultiLineAPI) Bukkit.getPluginManager().getPlugin("MultiLineAPI");
         if(line == null)  throw new IllegalStateException("Failed to start missing MultiLineAPI");
+        defaultLine = new DefaultLine();
+        line.addDefaultTagController(controller);
     }
 
     static {plugin = (Main) Bukkit.getServer().getPluginManager().getPlugin("MHU_GlobalRanks");}
@@ -144,39 +153,46 @@ public class Util {
         //the string should be kept as is
         switch(highestgroup(player)) {
             case "default":
-                line.getTag(player).getLines()[0]"§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]";
+                updatePlayerTag(player ,"§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]");
                 break;
             case "student":
-                "§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]"
+                updatePlayerTag(player ,"§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]");
                 break;
             case "sidekick":
-                "§f§l[§1Sidekick§f§l]" + " §f§l[§1" + position_sidekick + "§f§l]"
+                updatePlayerTag(player ,"§f§l[§1Sidekick§f§l]" + " §f§l[§1" + position_sidekick + "§f§l]");
                 break;
             case"hero":
-                "§f§l[§eHero§f§l]" + " §f§l[§e" + position_hero + "§f§l]"
+                updatePlayerTag(player ,  "§f§l[§eHero§f§l]" + " §f§l[§e" + position_hero + "§f§l]");
                 break;
             case "pro-hero":
-                "§f§l[§6Pro-Hero§f§l]" + " §f§l[§6" + position_prohero + "§f§l]"
+                updatePlayerTag(player ,"§f§l[§6Pro-Hero§f§l]" + " §f§l[§6" + position_prohero + "§f§l]");
                 break;
             case "thug":
-                "§f§l[§cThug§f§l]" + " §f§l[§c"+ position_thug + "§f§l]"
+                updatePlayerTag(player , "§f§l[§cThug§f§l]" + " §f§l[§c"+ position_thug + "§f§l]");
                 break;
             case "delinquent":
-                "§f§l[§5Delinquent§f§l]" + " §f§l[§5" + position_delinquent + "§f§l]"
+                updatePlayerTag(player ,"§f§l[§5Delinquent§f§l]" + " §f§l[§5" + position_delinquent + "§f§l]");
                 break;
             case "villain":
-                "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]"
+                updatePlayerTag(player , "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]");
                 break;
             case "pro-villain":
-                "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]"
+                updatePlayerTag(player ,"§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]");
                 break;
         }
 
 
     }
 
-
-
+    public void updatePlayerTag(Player player, String value) {
+        MultiLineAPI api = line;
+        api.deleteTag(player);
+        api.removeDefaultTagController(controller);
+        controller.line = new LineRank(value);
+        api.addDefaultTagController(controller);
+        Tag tag = line.getOrCreateTag(player);
+        tag.update(controller.line);
+    }
 
     public String highestgroup(Player player){
 
