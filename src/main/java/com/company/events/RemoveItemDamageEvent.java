@@ -1,5 +1,6 @@
 package com.company.events;
 
+import com.company.util.Utilities;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,7 +9,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class RemoveItemDamageEvent implements Listener {
 
+    private Utilities utilities;
 
+    public RemoveItemDamageEvent(Utilities utilities) {
+        this.utilities = utilities;
+    }
 
     @EventHandler
     public void RemoveItemDamage(EntityDamageByEntityEvent event) {

@@ -4,6 +4,7 @@ import com.company.commands.RankCMD;
 import com.company.events.EventMythicMobDeath;
 import com.company.events.EventPlayerDeath;
 import com.company.events.RankEvents;
+import com.company.events.RemoveItemDamageEvent;
 import com.company.util.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +38,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RankEvents(utilities), this);
         getServer().getPluginManager().registerEvents(new EventPlayerDeath(utilities), this);
         getServer().getPluginManager().registerEvents(new EventMythicMobDeath(utilities), this);
+        getServer().getPluginManager().registerEvents(new RemoveItemDamageEvent(utilities), this);
 
     }
 
