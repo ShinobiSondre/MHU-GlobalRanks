@@ -1,6 +1,6 @@
 package com.company.events;
 
-import com.company.util.Util;
+import com.company.util.Utilities;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
@@ -8,7 +8,12 @@ import org.bukkit.event.EventHandler;
 
 import java.io.IOException;
 
-public class EventMythicMobDeath extends Util implements Listener {
+public class EventMythicMobDeath implements Listener {
+
+    private Utilities utilities;
+    public EventMythicMobDeath(Utilities utilities) {
+        this.utilities = utilities;
+    }
 
         @EventHandler
         public void mobDeath(MythicMobDeathEvent dd) throws IOException {
@@ -16,16 +21,16 @@ public class EventMythicMobDeath extends Util implements Listener {
             if (dd.getMob().getFaction().equals("Villain") || dd.getMob().getFaction().equals("Hero")) {
                 String killer = dd.getKiller().getName();
 
-                if (!mobKills.containsKey(dd.getKiller().getUniqueId())) {
+                if (!utilities.mobKills.containsKey(dd.getKiller().getUniqueId())) {
 
-                    mobKills.put(dd.getKiller().getUniqueId(), 1);
+                    utilities. mobKills.put(dd.getKiller().getUniqueId(), 1);
 
-                } else if (mobKills.containsKey(dd.getKiller().getUniqueId())) {
+                } else if (utilities.mobKills.containsKey(dd.getKiller().getUniqueId())) {
 
-                    kills = mobKills.get(dd.getKiller().getUniqueId());
-                    kills++;
+                    utilities.kills = utilities.mobKills.get(dd.getKiller().getUniqueId());
+                    utilities.kills++;
 
-                    mobKills.put((dd.getKiller().getUniqueId()), kills);
+                    utilities.mobKills.put((dd.getKiller().getUniqueId()), utilities.kills);
                 }
 
             }

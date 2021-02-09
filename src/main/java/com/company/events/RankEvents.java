@@ -1,33 +1,28 @@
 package com.company.events;
 
-import com.company.util.Util;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
+import com.company.util.Utilities;
 import mhu.groot.grootlevels.events.PlayerLevelUpEvent;
+import net.minecraft.server.v1_12_R1.ItemStack;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.UUID;
-
-import static mhu.groot.grootlevels.classes.Levels.GetPlayerLevel;
 
 
-public class RankEvents extends Util implements Listener {
+public class RankEvents implements Listener {
 
+    private Utilities utilities;
+
+    public RankEvents(Utilities utilities) {
+        this.utilities = utilities;
+    }
 
     @EventHandler
     public void PlayerLoginEvent(PlayerLoginEvent ev) throws IOException {
@@ -35,9 +30,8 @@ public class RankEvents extends Util implements Listener {
         Player player = ev.getPlayer();
 
         if(ev.getPlayer().isOnline()){
-            ts.writeTotalPoints(player.getUniqueId(),player);
-            p.CalculatePosition(player);
-            DelayedHologram(player,50,"Login"+player.getUniqueId().toString());}}
+
+            utilities.DelayedHologram(player,50,"Login"+player.getUniqueId().toString());}}
 
 
     @EventHandler
@@ -45,24 +39,11 @@ public class RankEvents extends Util implements Listener {
 
         Player pp = p.getPlayer();
 
-        mobKills.remove(pp.getUniqueId());
+        utilities.mobKills.remove(pp.getUniqueId());
+        utilities.DelayedHologram(pp,100,"Login");
 
         //REMOVE HOLOGRAM HERE
 
-    }
-
-
-
-                    try {
-                        CalculatePosition(player.getPlayer());
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
     }
 
 
@@ -72,19 +53,19 @@ public class RankEvents extends Util implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
 
             try {
-                ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
+                utilities.ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
-                CalculatePosition(player.getPlayer());
+                utilities.CalculatePosition(player.getPlayer());
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            DelayedHologram(player, 80, player.getUniqueId() + "lvlUp");
+            utilities.DelayedHologram(player, 80, player.getUniqueId() + "lvlUp");
 
         }
 

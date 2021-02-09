@@ -5,12 +5,11 @@ import com.company.Main;
 import com.company.Mobs;
 import com.company.Position;
 import com.company.TotalScore;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.Node;
 import me.lucko.luckperms.api.User;
+import me.nomonewman.nameTag.NameTagAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -24,14 +23,30 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class Util {
+public class Utilities {
 
-    public static HashMap<String,String> SurpassedEvent = new HashMap();
+    Main plugin;
+    NameTagAPI NAMEAPI;
+
+    public Main getPluginInstance() {
+        return plugin;
+    }
+
+    public Utilities(Main plugin) {
+        this.plugin = plugin;
+        NAMEAPI = (NameTagAPI) plugin.getServer().getPluginManager().getPlugin("NameTagAPI");
+    }
+
+    public static HashMap<String, String> SurpassedEvent = new HashMap();
 
     //CLASSES
-    public static TotalScore ts = new TotalScore();
-    public static Position p = new Position();
-    public static Mobs m = new Mobs();
+    public TotalScore ts = new TotalScore(this);
+    public Position p = new Position(this);
+    public Mobs m = new Mobs();
+
+    public Position getReference() {
+        return p;
+    }
 
     //CHECKS
     public static boolean readmobkills;
@@ -40,23 +55,17 @@ public class Util {
     //TIMER
     public static Timer t = new Timer();
     public static Map<String, Integer> taskID = new HashMap<String, Integer>();
-    public static HashMap<String,Integer>textwait = new HashMap<>();
+    public static HashMap<String, Integer> textwait = new HashMap<>();
 
     //MOB KILLS
-    protected static int kills = 0;
+    public int kills = 0;
     public static HashMap<UUID, Integer> mobKills = new HashMap<>();
 
-    //Holograms
-    public static Hologram grgram;
+    //This plugin instance
 
-            //This plugin instance
-    private static final Main plugin;
 
     //API
     LuckPermsApi api = (LuckPermsApi) Bukkit.getServicesManager().getRegistration(LuckPermsApi.class).getProvider();
-
-    static {plugin = (Main) Bukkit.getServer().getPluginManager().getPlugin("MHU_GlobalRanks");}
-
 
     public void CalculatePosition(Player player) throws IOException {
 
@@ -86,7 +95,6 @@ public class Util {
         int counter_provillain = 0;
 
 
-
         //HOLOGRAMS HERE
         //REMOVE THE HOLOGRAM HERE TO BE LATER READDED/UPDATED DOWN BELOW
 
@@ -94,76 +102,90 @@ public class Util {
 
         Set<String> keys = HighestScoreList().keySet();
 
-        for(String key : keys){
+        for (String key : keys) {
 
-            if(key.toString().contains(" default"))
+            if (key.toString().contains(" default"))
                 counter_citizen++;
-            else if(key.toString().contains(" student"))
+            else if (key.toString().contains(" student"))
                 counter_student++;
-            else if(key.toString().contains(" sidekick"))
+            else if (key.toString().contains(" sidekick"))
                 counter_sidekick++;
-            else if(key.toString().contains(" hero"))
+            else if (key.toString().contains(" hero"))
                 counter_hero++;
-            else if(key.toString().contains(" pro-hero"))
+            else if (key.toString().contains(" pro-hero"))
                 counter_prohero++;
-            else if(key.toString().contains(" thug"))
+            else if (key.toString().contains(" thug"))
                 counter_thug++;
-            else if(key.toString().contains(" delinquent"))
+            else if (key.toString().contains(" delinquent"))
                 counter_delinquent++;
-            else if(key.toString().contains(" villain"))
+            else if (key.toString().contains(" villain"))
                 counter_villain++;
-            else if(key.toString().contains(" pro-villain"))
+            else if (key.toString().contains(" pro-villain"))
                 counter_provillain++;
 
 
-            if(key.toString().split(" default")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" default")[0].contains(player.getUniqueId().toString()))
                 position_citizen = counter_citizen;
-            if(key.toString().split(" student")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" student")[0].contains(player.getUniqueId().toString()))
                 position_student = counter_student;
-            if(key.toString().split(" sidekick")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" sidekick")[0].contains(player.getUniqueId().toString()))
                 position_sidekick = counter_sidekick;
-            if(key.toString().split(" hero")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" hero")[0].contains(player.getUniqueId().toString()))
                 position_hero = counter_hero;
-            if(key.toString().split(" pro-hero")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" pro-hero")[0].contains(player.getUniqueId().toString()))
                 position_prohero = counter_prohero;
 
-            if(key.toString().split(" thug")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" thug")[0].contains(player.getUniqueId().toString()))
                 position_thug = counter_thug;
-            if(key.toString().split(" delinquent")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" delinquent")[0].contains(player.getUniqueId().toString()))
                 position_delinquent = counter_delinquent;
-            if(key.toString().split(" villain")[0].contains(player.getUniqueId().toString()))
+            if (key.toString().split(" villain")[0].contains(player.getUniqueId().toString()))
                 position_villain = counter_villain;
-            if(key.toString().split(" pro-villain")[0].contains(player.getUniqueId().toString()))
-                position_provillain = counter_provillain;}
+            if (key.toString().split(" pro-villain")[0].contains(player.getUniqueId().toString()))
+                position_provillain = counter_provillain;
+        }
 
         //HOLOGRAMS HERE
         //Where it says grgram.appendTextLine just change it to ur HologramUpdate or HologramCreate Method
         //the string should be kept as is
-
-        if(highestgroup(player).equals("default")){
-            grgram.appendTextLine(   "§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]");}
-        else if(highestgroup(player).equals("student"))
-            grgram.appendTextLine(   "§f§l[§bStudent§f§l]" + " §f§l[§b"+ position_student + "§f§l]");
-        else if(highestgroup(player).equals("sidekick"))
-            grgram.appendTextLine(   "§f§l[§1Sidekick§f§l]" + " §f§l[§1" + position_sidekick + "§f§l]");
-        else if(highestgroup(player).equals("hero"))
-            grgram.appendTextLine(   "§f§l[§eHero§f§l]" + " §f§l[§e" + position_hero + "§f§l]");
-        else if(highestgroup(player).equals("pro-hero"))
-            grgram.appendTextLine(   "§f§l[§6Pro-Hero§f§l]" + " §f§l[§6" + position_prohero + "§f§l]");
-        else if(highestgroup(player).equals("thug"))
-            grgram.appendTextLine(   "§f§l[§cThug§f§l]" + " §f§l[§c"+ position_thug + "§f§l]");
-        else if(highestgroup(player).equals("delinquent"))
-            grgram.appendTextLine(   "§f§l[§5Delinquent§f§l]" + " §f§l[§5" + position_delinquent + "§f§l]");
-        else if(highestgroup(player).equals("villain"))
-            grgram.appendTextLine(   "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]");
-        else if(highestgroup(player).equals("pro-villain"))
-            grgram.appendTextLine(   "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]");
-
+        switch (highestgroup(player)) {
+            case "default":
+                updatePlayerTag(player, "§f§l[§7Citizen§f§l]" + " §f§l[§7" + position_citizen + "§f§l]");
+                break;
+            case "student":
+                updatePlayerTag(player, "§f§l[§bStudent§f§l]" + " §f§l[§b" + position_student + "§f§l]");
+                break;
+            case "sidekick":
+                updatePlayerTag(player, "§f§l[§1Sidekick§f§l]" + " §f§l[§1" + position_sidekick + "§f§l]");
+                break;
+            case "hero":
+                updatePlayerTag(player, "§f§l[§eHero§f§l]" + " §f§l[§e" + position_hero + "§f§l]");
+                break;
+            case "pro-hero":
+                updatePlayerTag(player, "§f§l[§6Pro-Hero§f§l]" + " §f§l[§6" + position_prohero + "§f§l]");
+                break;
+            case "thug":
+                updatePlayerTag(player, "§f§l[§cThug§f§l]" + " §f§l[§c" + position_thug + "§f§l]");
+                break;
+            case "delinquent":
+                updatePlayerTag(player, "§f§l[§5Delinquent§f§l]" + " §f§l[§5" + position_delinquent + "§f§l]");
+                break;
+            case "villain":
+                updatePlayerTag(player, "§f§l[§cVillain§f§l]" + " §f§l[§c" + position_villain + "§f§l]");
+                break;
+            case "pro-villain":
+                updatePlayerTag(player, "§f§l[§4Pro-Villain§f§l]" + " §f§l[§4" + position_provillain + "§f§l]");
+                break;
+        }
 
 
     }
 
-    public String highestgroup(Player player){
+    public void updatePlayerTag(Player player, String value) {
+        NAMEAPI.updateThing(value, player);
+    }
+
+    public String highestgroup(Player player) {
 
 
         HashMap<String, Integer> primary = new HashMap<>();
@@ -182,41 +204,50 @@ public class Util {
 
             ArrayList<Node> groups = (ArrayList<Node>) var10000.collect(Collectors.toList());
 
-            for(int i = 0; i<groups.size(); i++){
+            for (int i = 0; i < groups.size(); i++) {
 
-                primary.put(groups.get(i).getGroupName(),var10001.getGroup(groups.get(i).getGroupName()).getWeight().getAsInt());
+                primary.put(groups.get(i).getGroupName(), var10001.getGroup(groups.get(i).getGroupName()).getWeight().getAsInt());
 
             }
 
 
         }
 
-        Set<String> keys = sortByValue(primary,true).keySet();
+        Set<String> keys = sortByValue(primary, true).keySet();
 
 
         int i = 0;
 
-        for(String key: keys){
+        for (String key : keys) {
 
             i++;
 
-            if(i==1)
+            if (i == 1)
                 return key;
 
         }
 
-        return "default";}
+        return "default";
+    }
 
 
-    public void RankUpdater(long ticks,String indentifier){
 
-        final int tid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+
+
+    public void RankUpdater(long ticks, String indentifier) {
+        if (plugin == null) {
+            Bukkit.broadcastMessage("plugin reference null broski");
+            return;
+        }
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public void run() {
 
-                for(Player player : Bukkit.getOnlinePlayers()) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
 
                     try {
                         if (!Rank(player.getUniqueId()).equals(highestgroup(player))) {
+
+                            player.sendMessage("HologramUpdated");
 
                             for (Player hs : Bukkit.getOnlinePlayers()) {
 
@@ -234,7 +265,7 @@ public class Util {
                                 }
 
 
-                                DelayedHologram(hs, 60, hs.getUniqueId() + "ChangeRank");
+                                //  DelayedHologram(hs, 60, hs.getUniqueId() + "ChangeRank");
 
 
                             }
@@ -252,18 +283,98 @@ public class Util {
     }
 
 
-
-
     public String Rank(UUID uuid) throws IOException {
 
-        Reader("PlayerData",uuid.toString(),"Rank: ");
 
-        return Reader("PlayerData",uuid.toString(),"Rank: ").get(0);}
+        return Reader("PlayerData", uuid.toString(), "Rank: ").get(0);
+    }
+
+
+    //READER ASYNC
+
+    public interface FindOneCallback {
+
+        public void onQueryDone(ArrayList<String> result);
+
+    }
+
+    public void ReaderAS(String folder, String filename, String keyword, final FindOneCallback callback) throws IOException {
+
+        Bukkit.getScheduler().runTaskAsynchronously(plugin.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+
+                ArrayList<String> data = new ArrayList();
+                try {
+                    File Filepath = new File("plugins/MHU_GlobalScore/" + folder + "/" + filename + ".txt");
+                    BufferedReader reader = null;
+                    try {
+                        reader = new BufferedReader(new FileReader(Filepath));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    String line = null;
+                    try {
+                        line = reader.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    while (line != null) {
+                        if (line.contains(keyword)) {
+                            data.add(line.split(keyword)[1]);
+                        }
+                        // read next line
+                        try {
+                            line = reader.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    reader.close();
+
+
+                    // go back to the tick loop
+                    Bukkit.getScheduler().runTask(plugin.getInstance(), new Runnable() {
+                        @Override
+                        public void run() {
+                            // call the callback with the result
+                            callback.onQueryDone(data);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
+
+
+    }
+
+
+    public void smh(Player player) throws IOException {
+        ReaderAS("PlayerData", player.getUniqueId().toString(), "Rank: ", new FindOneCallback() {
+            @Override
+            public void onQueryDone(ArrayList<String> result) {
+
+
+
+
+            }
+        });
+    }
+
+
+    //END READER ASYNC
+
+
 
 
 
 
     public ArrayList<String> Reader(String folder, String filename, String keyword) throws IOException {
+
 
         ArrayList <String> data = new ArrayList();
         try {
@@ -526,8 +637,21 @@ public class Util {
 
                     }
 
+                    try {
+                        ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                    TextendTask(sender.getName()+indentifier);
+                    try {
+                        CalculatePosition(hs.getPlayer());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    TextendTask(sender.getName()+indentifier,sender.getName()+indentifier);
 
                 }
             }
@@ -538,11 +662,20 @@ public class Util {
 
     }
 
-    public void TextendTask(String p){
+    public void TextendTask(String p,String textwaitid){
         if(taskID.containsKey(p)){
             int tid = taskID.get(p); //get the ID from the hashmap
             plugin.getServer().getScheduler().cancelTask(tid); //cancel the task
             taskID.remove(p); //remove the player from the hashmap
+
+            try{
+            textwait.remove(textwait.get(textwaitid));
+
+                textwait.remove(textwait.get(textwaitid)+0);
+                textwait.remove(textwait.get(textwaitid)+1);
+                textwait.remove(textwait.get(textwaitid)+2);
+
+            }catch (Exception e){}
         }
     }
 
