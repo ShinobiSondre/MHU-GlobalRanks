@@ -182,12 +182,10 @@ public class Utilities {
     }
 
     public void updatePlayerTag(Player player, String value) {
-        NAMEAPI.updateThing(value, player);
+        NAMEAPI.updateHologram(value, player);
     }
 
     public String highestgroup(Player player) {
-
-
         HashMap<String, Integer> primary = new HashMap<>();
 
         User user = api.getUserManager().getUser(player.getUniqueId());
@@ -241,45 +239,30 @@ public class Utilities {
         }
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public void run() {
-
                 for (Player player : Bukkit.getOnlinePlayers()) {
-
                     try {
                         if (!Rank(player.getUniqueId()).equals(highestgroup(player))) {
-
                             player.sendMessage("HologramUpdated");
-
-                            for (Player hs : Bukkit.getOnlinePlayers()) {
-
                                 try {
-                                    ts.writeTotalPoints(hs.getPlayer().getUniqueId(), hs.getPlayer());
+                                    ts.writeTotalPoints(player.getPlayer().getUniqueId(), player.getPlayer());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
 
                                 try {
-                                    CalculatePosition(hs.getPlayer());
-
+                                    CalculatePosition(player.getPlayer());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-
 
                                 //  DelayedHologram(hs, 60, hs.getUniqueId() + "ChangeRank");
-
-
-                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
-
             }
         }, 0, ticks); //schedule task with the ticks specified in the arguments
-
-
     }
 
 
